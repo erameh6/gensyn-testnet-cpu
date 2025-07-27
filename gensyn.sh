@@ -50,6 +50,15 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
             echo -e "${BOLD}${YELLOW}[✓] Cloning fresh repository...${NC}"
             cd $HOME && git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
 
+            # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
+            echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
+            wget https://github.com/whalepiz/gensyn-testnet/raw/main/run_rl_swarm.sh -O "$SWARM_DIR/run_rl_swarm.sh" || {
+                echo -e "${BOLD}${RED}[✗] Failed to download updated run_rl_swarm.sh${NC}"
+                exit 1
+            }
+            chmod +x "$SWARM_DIR/run_rl_swarm.sh"
+            echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
+
             mv "$HOME_DIR/swarm.pem" rl-swarm/
             mv "$HOME_DIR/userData.json" rl-swarm/modal-login/temp-data/ 2>/dev/null
             mv "$HOME_DIR/userApiKey.json" rl-swarm/modal-login/temp-data/ 2>/dev/null
@@ -58,6 +67,16 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
             echo -e "${BOLD}${YELLOW}[✓] Removing existing folder and starting fresh...${NC}"
             rm -rf "$SWARM_DIR"
             cd $HOME && git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
+            
+            # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
+            echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
+            wget https://github.com/whalepiz/gensyn-testnet/raw/main/run_rl_swarm.sh -O "$SWARM_DIR/run_rl_swarm.sh" || {
+                echo -e "${BOLD}${RED}[✗] Failed to download updated run_rl_swarm.sh${NC}"
+                exit 1
+            }
+            chmod +x "$SWARM_DIR/run_rl_swarm.sh"
+            echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
+            
             break
         else
             echo -e "\n${BOLD}${RED}[✗] Invalid choice. Please enter 1 or 2.${NC}"
@@ -66,6 +85,15 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
 else
     echo -e "${BOLD}${YELLOW}[✓] No existing swarm.pem found. Cloning repository...${NC}"
     cd $HOME && [ -d rl-swarm ] && rm -rf rl-swarm; git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
+    
+    # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
+    echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
+    wget https://github.com/whalepiz/gensyn-testnet/raw/main/run_rl_swarm.sh -O "$SWARM_DIR/run_rl_swarm.sh" || {
+        echo -e "${BOLD}${RED}[✗] Failed to download updated run_rl_swarm.sh${NC}"
+        exit 1
+    }
+    chmod +x "$SWARM_DIR/run_rl_swarm.sh"
+    echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
 fi
 
 cd rl-swarm || { echo -e "${BOLD}${RED}[✗] Failed to enter rl-swarm directory. Exiting.${NC}"; exit 1; }
@@ -80,5 +108,3 @@ source .venv/bin/activate || { echo -e "${BOLD}${RED}[✗] Failed to activate vi
 # Run main script
 echo -e "\n${BOLD}${GREEN}[✓] Starting RL Swarm...${NC}"
 ./run_rl_swarm.sh || { echo -e "${BOLD}${RED}[✗] Failed to run RL Swarm.${NC}"; exit 1; }
-
-exit 0
