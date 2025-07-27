@@ -28,6 +28,7 @@ NC="\e[0m"
 SWARM_DIR="$HOME/rl-swarm"
 TEMP_DATA_PATH="$SWARM_DIR/modal-login/temp-data"
 HOME_DIR="$HOME"
+CONFIG_FILE="$SWARM_DIR/rgym_exp/config/rg-swarm.yaml"
 
 cd $HOME
 
@@ -48,7 +49,7 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
             rm -rf "$SWARM_DIR"
 
             echo -e "${BOLD}${YELLOW}[✓] Cloning fresh repository...${NC}"
-            cd $HOME && git clone https://github.com/gensyn-ai/rl-swarm.git > /dev/null 2>&1
+            cd $HOME && git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
 
             # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
             echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
@@ -58,6 +59,16 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
             }
             chmod +x "$SWARM_DIR/run_rl_swarm.sh"
             echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
+
+            # Chỉnh sửa file config rg-swarm.yaml
+            echo -e "${BOLD}${YELLOW}[✓] Modifying rg-swarm.yaml configuration...${NC}"
+            if [ -f "$CONFIG_FILE" ]; then
+                sed -i 's/num_train_samples: 2/num_train_samples: 6/g' "$CONFIG_FILE"
+                echo -e "${BOLD}${GREEN}[✓] Successfully updated num_train_samples to 6${NC}"
+            else
+                echo -e "${BOLD}${RED}[✗] Config file rg-swarm.yaml not found${NC}"
+                exit 1
+            fi
 
             mv "$HOME_DIR/swarm.pem" rl-swarm/
             mv "$HOME_DIR/userData.json" rl-swarm/modal-login/temp-data/ 2>/dev/null
@@ -66,7 +77,7 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
         elif [ "$choice" == "2" ]; then
             echo -e "${BOLD}${YELLOW}[✓] Removing existing folder and starting fresh...${NC}"
             rm -rf "$SWARM_DIR"
-            cd $HOME && git clone https://github.com/gensyn-ai/rl-swarm.git > /dev/null 2>&1
+            cd $HOME && git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
             
             # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
             echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
@@ -77,6 +88,16 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
             chmod +x "$SWARM_DIR/run_rl_swarm.sh"
             echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
             
+            # Chỉnh sửa file config rg-swarm.yaml
+            echo -e "${BOLD}${YELLOW}[✓] Modifying rg-swarm.yaml configuration...${NC}"
+            if [ -f "$CONFIG_FILE" ]; then
+                sed -i 's/num_train_samples: 2/num_train_samples: 6/g' "$CONFIG_FILE"
+                echo -e "${BOLD}${GREEN}[✓] Successfully updated num_train_samples to 6${NC}"
+            else
+                echo -e "${BOLD}${RED}[✗] Config file rg-swarm.yaml not found${NC}"
+                exit 1
+            fi
+            
             break
         else
             echo -e "\n${BOLD}${RED}[✗] Invalid choice. Please enter 1 or 2.${NC}"
@@ -84,7 +105,7 @@ if [ -f "$SWARM_DIR/swarm.pem" ]; then
     done
 else
     echo -e "${BOLD}${YELLOW}[✓] No existing swarm.pem found. Cloning repository...${NC}"
-    cd $HOME && [ -d rl-swarm ] && rm -rf rl-swarm; git clone https://github.com/gensyn-ai/rl-swarm.git > /dev/null 2>&1
+    cd $HOME && [ -d rl-swarm ] && rm -rf rl-swarm; git clone https://github.com/whalepiz/rl-swarm.git > /dev/null 2>&1
     
     # Tải và thay thế run_rl_swarm.sh từ gensyn-testnet
     echo -e "${BOLD}${YELLOW}[✓] Updating run_rl_swarm.sh from gensyn-testnet...${NC}"
@@ -94,6 +115,16 @@ else
     }
     chmod +x "$SWARM_DIR/run_rl_swarm.sh"
     echo -e "${BOLD}${GREEN}[✓] Successfully updated run_rl_swarm.sh${NC}"
+
+    # Chỉnh sửa file config rg-swarm.yaml
+    echo -e "${BOLD}${YELLOW}[✓] Modifying rg-swarm.yaml configuration...${NC}"
+    if [ -f "$CONFIG_FILE" ]; then
+        sed -i 's/num_train_samples: 2/num_train_samples: 6/g' "$CONFIG_FILE"
+        echo -e "${BOLD}${GREEN}[✓] Successfully updated num_train_samples to 6${NC}"
+    else
+        echo -e "${BOLD}${RED}[✗] Config file rg-swarm.yaml not found${NC}"
+        exit 1
+    fi
 fi
 
 cd rl-swarm || { echo -e "${BOLD}${RED}[✗] Failed to enter rl-swarm directory. Exiting.${NC}"; exit 1; }
